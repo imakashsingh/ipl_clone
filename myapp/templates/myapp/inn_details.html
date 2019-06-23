@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'myapp/bulma.css' %}" />
+    <style>
+        .table, th, td {
+            border: 1px solid black;
+        }
+        .body
+        {
+            background-color : lightblue;
+        }
+        .college
+        {
+            color : red;
+        }
+        .table{
+            width : 60%;
+            border: 3px solid black;
+        }
+        .topcorner{
+            position:absolute;
+            top:0;
+            right:0;
+        }
+       tr:nth-child(even) {background-color: #f2f2f2;}
+    </style>
+</head>
+<body class = "body">
+<section class="hero is-success">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        {{team1}} vs {{team2}} Innings {{inn_no}}
+      </h1>
+    </div>
+  </div>
+</section>
+<div class = "topcorner">
+<a href="{% url 'logout' %}" class="button is-success">Logout</a>
+<a class="button is-link is-active">{{user.username}}</a>
+</div>
+<table class="table" align = "center">
+    <tr>
+        <th>Over</th>
+        <th>Batsman</th>
+        <th>Non-Striker</th>
+        <th>Bowler</th>
+        <th>Run</th>
+        <th>Wicket</th>
+    </tr>
+        {% for i in inn %}
+        <tr>
+            <td>{{i.over}}.{{i.ball}}</td>
+            <td>{{i.batsman}}</td>
+            <td>{{i.non_striker}}</td>
+            <td>{{i.bowler}}</td>
+            <td>{{i.total_run}}</td>
+            <td>{{i.player_dismissed}} {{i.dismissal_kind}}</td>
+        </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

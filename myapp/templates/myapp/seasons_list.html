@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'myapp/bulma.css' %}" />
+    <style>
+        .table, th, td {
+            border: 1px solid black;
+        }
+        .body
+        {
+            background-color : lightblue;
+        }
+        .college
+        {
+            color : red;
+        }
+        .table{
+            width : 60%;
+            border: 3px solid black;
+        }
+        .topcorner{
+            position:absolute;
+            top:0;
+            right:0;
+        }
+       tr:nth-child(even) {background-color: #f2f2f2;}
+    </style>
+</head>
+<body class = "body">
+<section class="hero is-success">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        {{title}}
+      </h1>
+    </div>
+  </div>
+</section>
+<div class = "topcorner">
+    <a href="{% url 'points_default' %}" class="button is-info">Points Table</a>
+    <a href="{% url 'defaul_matches_season' %}" class="button is-link is-warning">Seasons</a>
+    {% if user.username %}
+    <a href="{% url 'logout' %}" class="button is-danger">Logout</a>
+    <a class="button is-link is-primary">{{user.username}}</a>
+    {% else %}
+    <a href="{% url 'login' %}" class="button is-link">Login</a>
+    {% endif %}
+</div>
+<select onChange="select_year()" aria-controls="dropdown-menu" aria-haspopup="true" class="dropdown is-active" >
+    <option>Season</option>
+    {% for opt in list %}
+  <option value={{opt}}>{{opt}}</option>
+    {% endfor %}
+</select>
+<script>
+    function select_year()
+    {
+        var year = event.target.value;
+        var urll = 'http://127.0.0.1:8000/iplapp/seasons'+'/'+ year;
+        console.log(urll);
+        window.location = urll;
+
+    }
+</script>
+    <table class="table" align = "center">
+    <tr>
+        <th>Team1</th>
+        <th>Team2</th>
+        <th>Venue</th>
+        <th>Toss_Result</th>
+        <th>Toss_decision</th>
+        <th>Winner</th>
+        <th>Man_of_the_Match</th>
+        <th>Option</th>
+    </tr>
+        {% for match in matches %}
+        <tr>
+            <td>{{match.team1}}</td>
+            <td>{{match.team2}}</td>
+            <td>{{match.venue}}</td>
+            <td>{{match.toss_winner}}</td>
+            <td>{{match.toss_decision}}</td>
+            <td>{{match.winner}}</td>
+            <td>{{match.player_of_match}}</td>
+            <td><a class="button is-success" href="{% url 'match_details' match.match_id %}" >Details</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+</body>
+</html>

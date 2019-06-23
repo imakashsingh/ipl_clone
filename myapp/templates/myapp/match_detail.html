@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'myapp/bulma.css' %}" />
+    <style>
+        .table, th, td {
+            border: 1px solid black;
+        }
+        .body
+        {
+            background-color : lightblue;
+        }
+        .college
+        {
+            color : red;
+        }
+        .table{
+            width : 60%;
+            border: 3px solid black;
+        }
+        .topcorner{
+            position:absolute;
+            top:0;
+            right:0;
+        }
+       tr:nth-child(even) {background-color: #f2f2f2;}
+    </style>
+</head>
+<body class = "body">
+<section class="hero is-success">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        {{team1}} vs {{team2}} Season {{season}}
+      </h1>
+    </div>
+  </div>
+</section>
+<div class = "topcorner">
+<a href="{% url 'logout' %}" class="button is-success">Logout</a>
+<a class="button is-link is-active">{{user.username}}</a>
+</div>
+    <table class="table" align = "center">
+    <tr>
+        <th>Team1</th>
+        <th>Team2</th>
+        <th>Venue</th>
+        <th>Toss_Result</th>
+        <th>Toss_decision</th>
+        <th>Winner</th>
+        <th>Man_of_the_Match</th>
+    </tr>
+        {% for match in match_det%}
+        <tr>
+            <td>{{match.team1}}</td>
+            <td>{{match.team2}}</td>
+            <td>{{match.venue}}</td>
+            <td>{{match.toss_winner}}</td>
+            <td>{{match.toss_decision}}</td>
+            <td>{{match.winner}}</td>
+            <td>{{match.player_of_match}}</td>
+        </tr>
+    {% endfor %}
+    </table>
+<a class="button is-success" href="{% url 'innings_details' mid=match_id inn=inn1  %}">Innings1</a>
+<a class="button is-success" href="{% url 'innings_details' mid=match_id inn=inn2  %}">Innings2</a>
+<table class="table">
+    <h2><b>Top Run Scorers : {{first_bat}}</b></h2>
+    <tr>
+        <th>Player</th>
+        <th>Runs</th>
+    </tr>
+    {% for player in top_batsman1 %}
+    <tr>
+        <td>{{player.batsman}}</td>
+        <td>{{player.s}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<table class="table">
+    <h2><b>Top Run Scorers : {{first_bowl}}</b></h2>
+    <tr>
+        <th>Player</th>
+        <th>Runs</th>
+    </tr>
+    {% for player in top_batsman2 %}
+    <tr>
+        <td>{{player.batsman}}</td>
+        <td>{{player.s}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+<table class="table">
+    <h2><b>Top Wicket Takers : {{first_bowl}}</b></h2>
+    <tr>
+        <th>Player</th>
+        <th>Wickets</th>
+    </tr>
+    {% for player in top_bowler1 %}
+    <tr>
+        <td>{{player.bowler}}</td>
+        <td>{{player.c}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<table class="table">
+    <h2><b>Top Wicket Takers : {{first_bat}}</b></h2>
+    <tr>
+        <th>Player</th>
+        <th>Wickets</th>
+    </tr>
+    {% for player in top_bowler2 %}
+    <tr>
+        <td>{{player.bowler}}</td>
+        <td>{{player.c}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<table class="table">
+    <h2>Extra Runs</h2>
+    <tr>
+        <th>Team</th>
+        <th>Extras</th>
+    </tr>
+    <tr>
+        <td>{{first_bat}}</td>
+        <td>{{extra1}}</td>
+    </tr>
+    <tr>
+        <td>{{first_bowl}}</td>
+        <td>{{extra2}}</td>
+    </tr>
+</table>
+
+</body>
+</html>
